@@ -59,12 +59,39 @@ function list(req, res) {
         res.status(201).json({ data: newDish });
     }
 
+    function idMatches(req, res, next) {
+        const { dishId } = req.params;
+        const { data: { id } = {} } = req.body;
+
+        if (id && id !== dishId) {
+            return next({
+                status: 400,
+                message: `Dish id does not match route id. Dish: ${id}, Route: ${dishId}`,
+            });
+        }
+        next();
+    }
+
+    function update(req, res) {
+        const dish = res.locals.dish;
+        const { data: { name, description, price, image_url } = {} } = req.body;
+
+        dish.name = name;
+        dish.description = description;
+        dish.price = price;
+        dish.image_url = image_url;
+
+        res.json({ data: dish });
+    }
+
   module.exports = {
     list,
     read,
     dishExists,
     create,
     validateDish,
+    idMatches,
+    update,
   };
 
 
