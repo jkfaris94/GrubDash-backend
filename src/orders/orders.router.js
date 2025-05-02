@@ -12,6 +12,8 @@ router
 router
   .route("/:orderId")
   .get(controller.orderExists, controller.read)
+  .put(controller.orderExists, controller.idMatches, controller.validateOrder, controller.update)
+  .delete(controller.orderExists, controller.destroy)
   .all(methodNotAllowed);
 
 module.exports = router;
