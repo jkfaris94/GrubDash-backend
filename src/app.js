@@ -16,6 +16,10 @@ app.use(express.json());
 app.use("/dishes", dishesRouter);
 app.use("/orders", ordersRouter);
 
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to the GrubDash API" });
+});
+
 app.use(notFound);
 
 app.use(errorHandler);
